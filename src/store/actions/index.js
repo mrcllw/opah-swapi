@@ -1,1 +1,3 @@
-export const ActionTypes = {};
+export const ActionTypes = {
+  SET_CHARACTERS: 'SET_CHARACTERS',
+};
