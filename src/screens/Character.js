@@ -1,6 +1,6 @@
 import React, { useEffect } from 'react';
 import styled from 'styled-components/native';
-import { useRoute } from '@react-navigation/native';
+import { useNavigation, useRoute } from '@react-navigation/native';
 import { useDispatch, useSelector } from 'react-redux';
 import Image from '../components/Image';
 import Text from '../components/Text';
@@ -11,6 +11,7 @@ import charactersImages from '../assets/images/characters';
 import filmsImages from '../assets/images/films';
 
 export default function Character() {
+  const { navigate } = useNavigation();
   const { params: { id } } = useRoute();
   const dispatch = useDispatch();
   const { character } = useSelector(state => state.characters);
@@ -64,6 +65,7 @@ export default function Character() {
           <HorizontalListItem
             image={filmsImages[item.episode_id]}
             text={item.title}
+            onPress={() => navigate('Film', { id: item.episode_id })}
           />
         )}
       />
@@ -71,7 +73,7 @@ export default function Character() {
   )
 }
 
-const Container = styled.View({
+const Container = styled.ScrollView({
   flex: 1,
   backgroundColor: 'black',
   paddingTop: 10
