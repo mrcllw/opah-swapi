@@ -1,7 +1,18 @@
 import { ActionTypes } from '../actions';
 
 const initialState = {
-  characters: []
+  characters: [],
+  character: {
+    name: '',
+    height: '',
+    mass: '',
+    hair_color: '',
+    skin_color: '',
+    eye_color: '',
+    birth_year: '',
+    gender: '',
+    films: []
+  }
 };
 
 export default function charactersReducers(state = initialState, action) {
@@ -10,6 +21,11 @@ export default function charactersReducers(state = initialState, action) {
       return {
         ...state,
         characters: action.payload
+      };
+    case ActionTypes.SET_CHARACTER:
+      return {
+        ...state,
+        character: action.payload
       };
     default:
       return state;
