@@ -1,12 +1,13 @@
 import React, { useCallback } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
-import { useFocusEffect } from '@react-navigation/native';
+import { useNavigation, useFocusEffect } from '@react-navigation/native';
 import List from '../components/List';
 import ListItem from '../components/ListItem';
 import { setCharacters } from '../store/actions/charactersActions';
 import charactersImages from '../assets/images/characters';
 
 export default function Characters() {
+  const { navigate } = useNavigation();
   const dispatch = useDispatch();
   const { characters } = useSelector(state => state.characters);
 
@@ -28,7 +29,11 @@ export default function Characters() {
       item={({ item, index }) => {
         const id = index + 1;
         return (
-          <ListItem image={charactersImages[id]} text={item.name} />
+          <ListItem
+            image={charactersImages[id]}
+            text={item.name}
+            onPress={() => navigate('Character', { id })}
+          />
         )
       }}
     />

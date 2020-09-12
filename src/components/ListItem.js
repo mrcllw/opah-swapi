@@ -5,7 +5,7 @@ import Text from './Text';
 
 export default function ListItem({ onPress, image, text }) {
   return (
-    <Container onPress={onPress}>
+    <Container {...{ onPress }}>
       <Row>
         <Image source={image} size={40} />
         <TextContainer>
@@ -24,7 +24,7 @@ const Container = styled.TouchableOpacity({
   margin: 10
 });
 
-const Row = styled.TouchableOpacity({
+const Row = styled.View({
   flexDirection: 'row',
   alignItems: 'center'
 });

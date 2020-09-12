@@ -4,6 +4,7 @@ import { createStackNavigator } from '@react-navigation/stack';
 import { createBottomTabNavigator } from '@react-navigation/bottom-tabs';
 import Characters from '../screens/Characters';
 import Films from '../screens/Films';
+import Character from '../screens/Character';
 
 const Tabs = createBottomTabNavigator();
 function TabsNavigation() {
@@ -22,6 +23,7 @@ export default function Navigation() {
     <NavigationContainer>
       <Stack.Navigator>
         <Stack.Screen name='TabsNavigation' component={TabsNavigation} />
+        <Stack.Screen name='Character' component={Character} />
       </Stack.Navigator>
     </NavigationContainer>
   )

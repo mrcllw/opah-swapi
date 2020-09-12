@@ -28,7 +28,10 @@ export default function Films() {
       item={({ item, index }) => {
         const id = index + 1;
         return (
-          <ListItem image={filmsImages[id]} text={item.title} />
+          <ListItem
+            image={filmsImages[id]}
+            text={item.title}
+          />
         )
       }}
     />
