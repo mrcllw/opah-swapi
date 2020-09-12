@@ -5,8 +5,9 @@ import { useDispatch, useSelector } from 'react-redux';
 import Image from '../components/Image';
 import Text from '../components/Text';
 import List from '../components/List';
+import Loading from '../components/Loading';
 import HorizontalListItem from '../components/HorizontalListItem';
-import { setCharacter } from '../store/actions/charactersActions';
+import { setCharacter, setLoadingCharacters } from '../store/actions/charactersActions';
 import charactersImages from '../assets/images/characters';
 import filmsImages from '../assets/images/films';
 
@@ -14,13 +15,14 @@ export default function Character() {
   const { navigate } = useNavigation();
   const { params: { id } } = useRoute();
   const dispatch = useDispatch();
-  const { character } = useSelector(state => state.characters);
+  const { loading, character } = useSelector(state => state.characters);
 
   useEffect(() => {
     loadCharacter();
   }, []);
 
   async function loadCharacter() {
+    dispatch(setLoadingCharacters());
     const response = await fetch(`https://swapi.dev/api/people/${id}`);
     const data = await response.json();
 
@@ -34,7 +36,7 @@ export default function Character() {
     dispatch(setCharacter({ ...data, films }));
   }
 
-  return (
+  return loading ? (<Loading />) : (
     <Container>
       <ImageContainer>
         <Image source={charactersImages[id]} size={200} />

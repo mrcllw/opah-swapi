@@ -1,6 +1,7 @@
 import { ActionTypes } from '../actions';
 
 const initialState = {
+  loading: true,
   films: [],
   film: {
     title: '',
@@ -18,13 +19,20 @@ export default function filmsReducers(state = initialState, action) {
     case ActionTypes.SET_FILMS:
       return {
         ...state,
-        films: action.payload
+        films: action.payload,
+        loading: false
       };
     case ActionTypes.SET_FILM:
       return {
         ...state,
-        film: action.payload
+        film: action.payload,
+        loading: false
       };
+    case ActionTypes.SET_LOADING_FILMS:
+      return {
+        ...state,
+        loading: true
+      }
     default:
       return state;
   }

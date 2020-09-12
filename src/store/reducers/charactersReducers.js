@@ -1,6 +1,7 @@
 import { ActionTypes } from '../actions';
 
 const initialState = {
+  loading: true,
   characters: [],
   character: {
     name: '',
@@ -20,12 +21,19 @@ export default function charactersReducers(state = initialState, action) {
     case ActionTypes.SET_CHARACTERS:
       return {
         ...state,
-        characters: action.payload
+        characters: action.payload,
+        loading: false
       };
     case ActionTypes.SET_CHARACTER:
       return {
         ...state,
-        character: action.payload
+        character: action.payload,
+        loading: false
+      };
+    case ActionTypes.SET_LOADING_CHARACTERS:
+      return {
+        ...state,
+        loading: true
       };
     default:
       return state;

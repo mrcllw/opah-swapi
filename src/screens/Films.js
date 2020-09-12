@@ -3,13 +3,14 @@ import { useDispatch, useSelector } from 'react-redux';
 import { useNavigation, useFocusEffect } from '@react-navigation/native';
 import List from '../components/List';
 import ListItem from '../components/ListItem';
-import { setFilms } from '../store/actions/filmsActions';
+import Loading from '../components/Loading';
+import { setFilms, setLoadingFilms } from '../store/actions/filmsActions';
 import filmsImages from '../assets/images/films';
 
 export default function Films() {
   const { navigate } = useNavigation();
   const dispatch = useDispatch();
-  const { films } = useSelector(state => state.films);
+  const { loading, films } = useSelector(state => state.films);
 
   useFocusEffect(
     useCallback(() => {
@@ -18,12 +19,13 @@ export default function Films() {
   );
 
   async function loadFilms() {
+    dispatch(setLoadingFilms());
     const response = await fetch('https://swapi.dev/api/films/');
     const { results } = await response.json();
     dispatch(setFilms(results));
   }
 
-  return (
+  return loading ? (<Loading />) : (
     <List
       data={films}
       item={({ item, index }) => {
