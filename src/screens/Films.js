@@ -1,6 +1,6 @@
-import React, { useCallback } from 'react';
+import React, { useEffect } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
-import { useNavigation, useFocusEffect } from '@react-navigation/native';
+import { useNavigation } from '@react-navigation/native';
 import List from '../components/List';
 import ListItem from '../components/ListItem';
 import Loading from '../components/Loading';
@@ -12,11 +12,9 @@ export default function Films() {
   const dispatch = useDispatch();
   const { loading, films } = useSelector(state => state.films);
 
-  useFocusEffect(
-    useCallback(() => {
-      loadFilms()
-    }, [])
-  );
+  useEffect(() => {
+    loadFilms();
+  }, []);
 
   async function loadFilms() {
     dispatch(setLoadingFilms());

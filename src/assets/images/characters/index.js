@@ -81,10 +81,4 @@ export default {
   80: require('./80.jpg'),
   81: require('./81.jpg'),
   82: require('./82.jpg'),
-  83: require('./83.jpg'),
-  84: require('./84.jpg'),
-  85: require('./85.jpg'),
-  86: require('./86.jpg'),
-  87: require('./87.jpg'),
-  88: require('./88.jpg'),
 }

@@ -22,6 +22,7 @@ export default function Loading() {
         source={logo}
         style={{
           tintColor: 'yellow',
+          padding: 10,
           width: 50,
           height: 50,
           transform: [{

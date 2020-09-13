@@ -1,31 +1,40 @@
-import React, { useCallback } from 'react';
+import React, { useEffect } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
-import { useNavigation, useFocusEffect } from '@react-navigation/native';
+import { useNavigation } from '@react-navigation/native';
 import List from '../components/List';
 import ListItem from '../components/ListItem';
 import Loading from '../components/Loading';
-import { setCharacters, setLoadingCharacters } from '../store/actions/charactersActions';
+import { setCharacters, setLoadingCharacters, setMoreCharacters } from '../store/actions/charactersActions';
 import charactersImages from '../assets/images/characters';
 
 export default function Characters() {
   const { navigate } = useNavigation();
   const dispatch = useDispatch();
-  const { loading, characters } = useSelector(state => state.characters);
+  const { loading, page, total, characters } = useSelector(state => state.characters);
 
-  useFocusEffect(
-    useCallback(() => {
-      loadCharacters()
-    }, [])
-  );
+  useEffect(() => {
+    loadInitialCharacters();
+  }, []);
 
   async function loadCharacters() {
     dispatch(setLoadingCharacters());
-    const response = await fetch('https://swapi.dev/api/people/');
-    const { results } = await response.json();
-    dispatch(setCharacters(results));
+    const response = await fetch(`https://swapi.dev/api/people/?page=${page}`);
+    const data = await response.json();
+    return data;
   }
 
-  return loading ? (<Loading />) : (
+  async function loadInitialCharacters() {
+    const { count, results } = await loadCharacters();
+    dispatch(setCharacters({ characters: results, total: count }));
+  }
+
+  async function loadMoreCharacters() {
+    if (loading || characters.length == total) return;
+    const { results } = await loadCharacters();
+    dispatch(setMoreCharacters(results));
+  }
+
+  return (
     <List
       data={characters}
       item={({ item, index }) => {
@@ -37,6 +46,15 @@ export default function Characters() {
             onPress={() => navigate('Character', { id })}
           />
         )
+      }}
+      onEndReached={loadMoreCharacters}
+      onEndReachedThreshold={0.1}
+      ListFooterComponent={() => loading && <Loading />}
+      ListFooterComponentStyle={{
+        flex: 1
+      }}
+      contentContainerStyle={{
+        flexGrow: 1
       }}
     />
   )

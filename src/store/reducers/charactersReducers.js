@@ -1,6 +1,8 @@
 import { ActionTypes } from '../actions';
 
 const initialState = {
+  page: 1,
+  total: 0,
   loading: true,
   characters: [],
   character: {
@@ -21,8 +23,10 @@ export default function charactersReducers(state = initialState, action) {
     case ActionTypes.SET_CHARACTERS:
       return {
         ...state,
-        characters: action.payload,
-        loading: false
+        characters: action.payload.characters,
+        loading: false,
+        page: state.page + 1,
+        total: action.payload.total,
       };
     case ActionTypes.SET_CHARACTER:
       return {
@@ -34,6 +38,16 @@ export default function charactersReducers(state = initialState, action) {
       return {
         ...state,
         loading: true
+      };
+    case ActionTypes.SET_MORE_CHARACTERS:
+      return {
+        ...state,
+        characters: [
+          ...state.characters,
+          ...action.payload
+        ],
+        loading: false,
+        page: state.page + 1
       };
     default:
       return state;
